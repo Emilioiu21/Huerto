@@ -1,0 +1,1040 @@
+:root {
+    --bg-sky: #87CEEB;
+    --bg-sky-gradient: linear-gradient(135deg, #87CEEB 0%, #a2e0fb 100%);
+    --grass-color: #55a630;
+    --grass-dark: #2b9348;
+
+    --dirt-dry: #b08d6a;
+    --dirt-dry-hover: #c49d76;
+    --dirt-wet: #6b4c3a;
+    --dirt-wet-hover: #7b5843;
+
+    --text-main: #333;
+    --text-light: #fff;
+
+    --panel-bg: rgba(255, 255, 255, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.4);
+
+    --accent-blue: #0077b6;
+    --accent-green: #38b000;
+    --accent-yellow: #ffb703;
+    --accent-red: #d90429;
+
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-hard: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg-sky-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, transparent 40%, var(--grass-color) 40%);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background elements like clouds can go here later */
+
+/* HEADER */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--panel-border);
+    z-index: 10;
+}
+
+.title-box h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+.stat-box .icon {
+    font-size: 1.4rem;
+}
+
+/* MAIN GARDEN AREA */
+.garden-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    transform: rotateX(20deg);
+    /* Iso-like view */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.plot {
+    width: 100px;
+    height: 100px;
+    background-color: var(--dirt-dry);
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 0 4px 0 var(--dirt-wet);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10px;
+}
+
+.plot:hover {
+    transform: translateY(-5px);
+    background-color: var(--dirt-dry-hover);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), 0 9px 0 var(--dirt-wet);
+}
+
+.plot.wet {
+    background-color: var(--dirt-wet);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4), 0 4px 0 #4a3427;
+}
+
+.plot.wet:hover {
+    background-color: var(--dirt-wet-hover);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 9px 0 #4a3427;
+}
+
+.plot.dead {
+    filter: grayscale(80%) sepia(20%);
+}
+
+.plant {
+    font-size: 2.5rem;
+    position: absolute;
+    bottom: 15px;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transform-origin: bottom center;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* FOOTER CONTROLS */
+.control-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid var(--panel-border);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 10;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.tools,
+.shop,
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.tool-buttons,
+.seed-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 2px solid transparent;
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tool-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tool-btn.active {
+    border-color: var(--accent-blue);
+    background: #e6f2ff;
+    color: var(--accent-blue);
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.seed-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+}
+
+.seed-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.seed-info .name {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.seed-info .cost {
+    font-size: 0.8rem;
+    color: #ff9900;
+    font-weight: 800;
+}
+
+.seed-btn.active {
+    border-color: var(--accent-yellow);
+    background: #fffdf0;
+}
+
+.action-btn {
+    background: var(--accent-green);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(56, 176, 0, 0.4);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    background: #4cc900;
+    box-shadow: 0 6px 15px rgba(56, 176, 0, 0.5);
+}
+
+.action-btn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+.reset-btn {
+    background: #f1f1f1;
+    color: #666;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reset-btn:hover {
+    background: #ffcccc;
+    color: var(--accent-red);
+}
+
+/* Animaciones */
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes waterSplash {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.water-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: rgba(135, 206, 235, 0.5);
+    animation: waterSplash 0.5s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Monedas volando */
+.coin-anim {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatUp 1s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+    pointer-events: none;
+    z-index: 100;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Appending styles for the Florist feature to the end of the file */  .header-actions  {
+          display:  flex;
+          align-items:  center;
+          gap:  15px;
+      
+}
+
+    .florist-btn  {
+          background:  linear-gradient(135deg,  #ff7eb3,  #ff758c);
+          color:  white;
+          border:  none;
+          padding:  8px 16px;
+          border-radius:  20px;
+          font-family:  inherit;
+          font-weight:  800;
+          font-size:  1.1rem;
+          cursor:  pointer;
+          box-shadow:  0 4px 10px rgba(255,  117,  140,  0.4);
+          transition:  all 0.2s ease;
+      
+}
+
+    .florist-btn:hover  {
+          transform:  translateY(-2px);
+          box-shadow:  0 6px 15px rgba(255,  117,  140,  0.6);
+      
+}
+
+    /* Modal Overlay */  .modal-overlay  {
+          position:  fixed;
+          top:  0;
+          left:  0;
+          width:  100%;
+          height:  100%;
+          background:  rgba(0,  0,  0,  0.5);
+          backdrop-filter:  blur(5px);
+          display:  flex;
+          justify-content:  center;
+          align-items:  center;
+          z-index:  1000;
+          opacity:  1;
+          transition:  opacity 0.3s ease;
+      
+}
+
+    .modal-overlay.hidden  {
+          opacity:  0;
+          pointer-events:  none;
+      
+}
+
+    /* Modal Content */  .modal-content  {
+          background:  var(--panel-bg);
+          width:  90%;
+          max-width:  800px;
+          max-height:  85vh;
+          border-radius:  24px;
+          padding:  30px;
+          position:  relative;
+          box-shadow:  0 20px 50px rgba(0, 0, 0, 0.3);
+          display:  flex;
+          flex-direction:  column;
+          overflow:  hidden;
+      
+}
+
+    .modal-content h2  {
+          text-align:  center;
+          color:  #ff477e;
+          margin-bottom:  20px;
+          font-size:  2rem;
+      
+}
+
+    .close-btn  {
+          position:  absolute;
+          top:  20px;
+          right:  20px;
+          background:  none;
+          border:  none;
+          font-size:  1.5rem;
+          cursor:  pointer;
+          transition:  transform 0.2s;
+      
+}
+
+    .close-btn:hover  {
+          transform:  scale(1.2);
+      
+}
+
+    /* Florist Layout */  .florist-layout  {
+          display:  flex;
+          gap:  20px;
+          height:  100%;
+          overflow:  hidden;
+      
+}
+
+    .inventory-section,
+ .recipes-section  {
+          flex:  1;
+          background:  rgba(255, 255, 255, 0.6);
+          border-radius:  16px;
+          padding:  20px;
+          overflow-y:  auto;
+      
+}
+
+    .inventory-section h3,
+ .recipes-section h3  {
+          text-align:  center;
+          margin-bottom:  15px;
+          color:  #333;
+      
+}
+
+    /* Inventory Grid */  .inventory-grid  {
+          display:  grid;
+          grid-template-columns:  repeat(auto-fill,  minmax(80px,  1fr));
+          gap:  15px;
+      
+}
+
+    .inventory-item  {
+          background:  white;
+          border-radius:  12px;
+          padding:  10px;
+          text-align:  center;
+          box-shadow:  0 4px 6px rgba(0, 0, 0, 0.05);
+          display:  flex;
+          flex-direction:  column;
+          align-items:  center;
+      
+}
+
+    .inventory-item .icon  {
+          font-size:  2rem;
+          margin-bottom:  5px;
+      
+}
+
+    .inventory-item .count  {
+          font-weight:  800;
+          font-size:  1.1rem;
+          color:  var(--accent-blue);
+          background:  #e6f2ff;
+          border-radius:  50%;
+          width:  30px;
+          height:  30px;
+          display:  flex;
+          justify-content:  center;
+          align-items:  center;
+      
+}
+
+    /* Recipes List */  .recipes-list  {
+          display:  flex;
+          flex-direction:  column;
+          gap:  15px;
+      
+}
+
+    .recipe-card  {
+          background:  white;
+          border-radius:  16px;
+          padding:  15px;
+          display:  flex;
+          justify-content:  space-between;
+          align-items:  center;
+          box-shadow:  0 4px 10px rgba(0, 0, 0, 0.05);
+          transition:  transform 0.2s;
+      
+}
+
+    .recipe-card:hover  {
+          transform:  translateX(5px);
+      
+}
+
+    .recipe-info  {
+          display:  flex;
+          flex-direction:  column;
+          gap:  5px;
+      
+}
+
+    .recipe-title  {
+          font-weight:  800;
+          font-size:  1.1rem;
+          color:  #333;
+      
+}
+
+    .recipe-ingredients  {
+          display:  flex;
+          gap:  8px;
+      
+}
+
+    .ingredient  {
+          font-size:  1.2rem;
+          background:  #f5f5f5;
+          padding:  2px 6px;
+          border-radius:  8px;
+      
+}
+
+    .recipe-action  {
+          display:  flex;
+          flex-direction:  column;
+          align-items:  flex-end;
+          gap:  8px;
+      
+}
+
+    .recipe-price  {
+          font-weight:  800;
+          color:  #ff9900;
+          font-size:  1.2rem;
+      
+}
+
+    .craft-btn  {
+          background:  var(--accent-green);
+          color:  white;
+          border:  none;
+          padding:  8px 15px;
+          border-radius:  12px;
+          font-weight:  800;
+          cursor:  pointer;
+          transition:  all 0.2s;
+      
+}
+
+    .craft-btn:hover  {
+          background:  #4cc900;
+      
+}
+
+    .craft-btn:disabled  {
+          background:  #ccc;
+          cursor:  not-allowed;
+          transform:  none;
+      
+}
+
+    /* Bouquet Animation */  @keyframes bouquetCraft  {
+          0%  {
+         transform:  scale(1);
+         filter:  brightness(1);
+         
+    }
+
+          50%  {
+         transform:  scale(1.1);
+         filter:  brightness(1.5);
+         
+    }
+
+          100%  {
+         transform:  scale(1);
+         filter:  brightness(1);
+         
+    }
+
+      
+}
+
+    .crafting-anim  {
+          animation:  bouquetCraft 0.5s ease-out;
+      
+}
+
+    /* Added small margin to bottom for seed buttons to allow 3 buttons nicely */  .seed-buttons  {
+          flex-wrap:  wrap;
+      
+}
+
+  
+/* Better Shop Buttons Layout */
+.shop-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.shop-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(86, 171, 47, 0.4);
+    transition: all 0.2s ease;
+}
+
+.shop-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(86, 171, 47, 0.6);
+}
+
+.shop-btn .icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.shop-btn.supplies {
+    background: linear-gradient(135deg, #d478ff, #8a2be2);
+    box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4);
+}
+
+.shop-btn.supplies:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(138, 43, 226, 0.6);
+}
+
+.shop-btn.active {
+    outline: 3px solid #fff;
+    box-shadow: 0 0 0 4px var(--accent-blue);
+    transform: scale(0.95);
+}
+
+/* Enlarge icons inside the catalog modal */
+.seed-btn .icon {
+    font-size: 2.5rem;
+}
+\n/* Environment & Weather Styles */
+body {
+    transition: background-color 1s ease;
+}
+
+/* Seasons Colors */
+body.season-spring {
+    --grass-color: #55a630;
+    --grass-dark: #2b9348;
+    background-color: #87CEEB;
+}
+
+body.season-summer {
+    --grass-color: #70b835;
+    --grass-dark: #4b9e22;
+    background-color: #42b6f5;
+}
+
+body.season-autumn {
+    --grass-color: #d48c3b;
+    --grass-dark: #a86422;
+    background-color: #f5a742;
+}
+
+body.season-winter {
+    --grass-color: #e0f2f1;
+    --grass-dark: #b2dfdb;
+    background-color: #a4b0be;
+    --dirt-dry: #d3d3d3;
+    --dirt-dry-hover: #e6e6e6;
+}
+
+/* Environment Info Box */
+.environment-box {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--accent-blue);
+    min-width: 150px;
+    justify-content: center;
+}
+
+/* Weather Overlays */
+.weather-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1; /* Below UI, above background */
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.night-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 15, 36, 0.85);
+    pointer-events: none;
+    z-index: 5; /* Below UI */
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.night-layer.active {
+    opacity: 1;
+}
+
+/* Weather Effects - Fixed SVG/Gradients */
+body.weather-rainy .weather-layer {
+    opacity: 1;
+    background: 
+        repeating-linear-gradient(165deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 2%, rgba(255,255,255,0.4) 3%, rgba(255,255,255,0) 4%),
+        repeating-linear-gradient(165deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 5%, rgba(255,255,255,0.2) 6%, rgba(255,255,255,0) 7%);
+    background-size: 30px 150px, 50px 200px;
+    animation: rainFall 0.4s linear infinite;
+}
+
+body.weather-snowy .weather-layer {
+    opacity: 1;
+    background-image: radial-gradient(circle, #fff 2px, transparent 3px), radial-gradient(circle, #fff 2px, transparent 3px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: snowFall 5s linear infinite;
+}
+
+body.weather-cloudy .weather-layer {
+    opacity: 0.7;
+    background-image: 
+        radial-gradient(circle at 20px 20px, rgba(255,255,255,0.9) 30px, transparent 35px),
+        radial-gradient(circle at 60px 40px, rgba(255,255,255,0.9) 40px, transparent 45px),
+        radial-gradient(circle at 110px 30px, rgba(255,255,255,0.9) 35px, transparent 40px);
+    background-size: 250px 150px;
+    background-repeat: repeat;
+    animation: cloudsMove 15s linear infinite;
+    filter: blur(8px);
+}
+
+@keyframes rainFall {
+    0% { background-position: 0px 0px, 0px 0px; }
+    100% { background-position: -50px 150px, -70px 200px; }
+}
+
+@keyframes snowFall {
+    0% { background-position: 0px 0px, 25px 25px; }
+    100% { background-position: 50px 100vh, 75px calc(100vh + 25px); }
+}
+
+@keyframes cloudsMove {
+    0% { background-position: 0px 0px; }
+    100% { background-position: 250px 50px; }
+}
+
+/* Tool styles update */
+.tool-btn[data-tool="fertilizer"] {
+    background: #f0e6ff;
+    color: #6b21a8;
+}
+.tool-btn[data-tool="fertilizer"].active {
+    border-color: #9333ea;
+    background: #e9d5ff;
+}
+\n/* Gear reset button */
+.icon-btn {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-btn:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Shovel Tool */
+.tool-btn[data-tool="shovel"] {
+    background: #fff4e6;
+    color: #b75e09;
+}
+.tool-btn[data-tool="shovel"].active {
+    border-color: #f59e0b;
+    background: #fef3c7;
+}
+
+/* Seed Catalog Modal */
+.catalog-content {
+    max-width: 500px;
+}
+
+.modal-balance {
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    background: #f0fdf4;
+    color: #166534;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #bbf7d0;
+}
+
+.seed-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Forzar cuadrícula de 2 columnas */
+    gap: 15px;
+    padding: 10px;
+}
+.seed-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+}
+.seed-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+.seed-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.seed-info .name {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #333;
+}
+.seed-info .cost {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #ff9900;
+}
+
+/* Better Shop Buttons Layout */
+.shop-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.shop-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(86, 171, 47, 0.4);
+    transition: all 0.2s ease;
+}
+
+.shop-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(86, 171, 47, 0.6);
+}
+
+.shop-btn .icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.shop-btn.supplies {
+    background: linear-gradient(135deg, #d478ff, #8a2be2);
+    box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4);
+}
+
+.shop-btn.supplies:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(138, 43, 226, 0.6);
+}
+
+.shop-btn.active {
+    outline: 3px solid #fff;
+    box-shadow: 0 0 0 4px var(--accent-blue);
+    transform: scale(0.95);
+}
+
+/* Enlarge icons inside the catalog modal */
+.seed-btn .icon {
+    font-size: 2.5rem;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+    }
+    .app-container {
+        height: 100vh;
+        border-radius: 0;
+        overflow-y: auto;
+        padding-bottom: 20px;
+    }
+    .top-bar {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        text-align: center;
+    }
+    .title-box {
+        width: 100%;
+        order: -1;
+    }
+    .header-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .control-panel {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .tools, .shop, .actions {
+        width: 100%;
+        align-items: center;
+    }
+    .tool-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .shop > div {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .grid {
+        grid-gap: 5px;
+        padding: 10px;
+        transform: rotateX(10deg);
+    }
+    .plot {
+        width: 70px;
+        height: 70px;
+    }
+    .plant {
+        font-size: 2rem;
+        bottom: 10px;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        max-height: 90vh;
+    }
+    .florist-layout {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    .inventory-section, .recipes-section {
+        flex: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .plot {
+        width: 60px;
+        height: 60px;
+    }
+    .plant {
+        font-size: 1.5rem;
+    }
+    .grid {
+        grid-gap: 3px;
+    }
+}

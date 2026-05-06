@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huerto Virtual</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header con estadísticas -->
+        <header class="top-bar">
+            <div class="stat-box">
+                <span class="icon">🪙</span>
+                <span id="coins-display" class="value">100</span>
+            </div>
+            <div class="title-box">
+                <h1>Mi Huerto Virtual</h1>
+            </div>
+            <div class="header-actions">
+                <button id="btn-reset" class="icon-btn" title="Reiniciar Juego">⚙️</button>
+                <button id="btn-florist" class="florist-btn">
+                    💐 Floristería
+                </button>
+                <div class="stat-box environment-box">
+                    <span id="season-icon" class="icon">🌸</span>
+                    <span class="value" id="weather-text">Soleado</span>
+                </div>
+                <div class="stat-box">
+                    <span class="icon">☀️</span>
+                    <span class="value">Día <span id="day-display">1</span></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenedor principal del huerto -->
+        <main class="garden-area">
+            <div id="garden-grid" class="grid">
+                <!-- Las parcelas se generarán por JavaScript -->
+            </div>
+        </main>
+
+        <!-- Panel de controles y tienda -->
+        <footer class="control-panel">
+            <div class="tools">
+                <h3>Herramientas</h3>
+                <div class="tool-buttons">
+                    <button id="tool-water" class="tool-btn active" data-tool="water">
+                        <span class="icon">💧</span> Regar
+                    </button>
+                    <button id="tool-harvest" class="tool-btn" data-tool="harvest">
+                        <span class="icon">🧺</span> Cosechar
+                    </button>
+                    <button id="tool-shovel" class="tool-btn" data-tool="shovel">
+                        <span class="icon">⛏️</span> Palita
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop">
+                <h3>Catálogos</h3>
+                <div class="shop-buttons">
+                    <button id="btn-catalog" class="shop-btn">
+                        <span class="icon">🌱</span> Semillas
+                    </button>
+                    <button id="btn-supplies" class="shop-btn supplies">
+                        <span class="icon">🧪</span> Magia
+                    </button>
+                </div>
+            </div>
+
+            <div class="actions">
+                <h3>Tiempo</h3>
+                <button id="btn-next-day" class="action-btn next-day">
+                    Avanzar Día
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Catálogo de Semillas -->
+    <div id="catalog-modal" class="modal-overlay hidden">
+        <div class="modal-content catalog-content">
+            <button id="btn-close-catalog" class="close-btn">❌</button>
+            <h2>🌱 Catálogo de Semillas</h2>
+            <div id="catalog-balance" class="modal-balance">🪙 100</div>
+            <div class="seed-grid" id="seed-catalog-grid">
+                <!-- Generado por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Catálogo de Suministros -->
+    <div id="supplies-modal" class="modal-overlay hidden">
+        <div class="modal-content catalog-content">
+            <button id="btn-close-supplies" class="close-btn">❌</button>
+            <h2>🧪 Suministros Mágicos</h2>
+            <div id="supplies-balance" class="modal-balance">🪙 100</div>
+            <div class="seed-grid" id="supplies-catalog-grid">
+                <!-- Generado por JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de la Floristería -->
+    <div id="florist-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="btn-close-florist" class="close-btn">❌</button>
+            <h2>💐 Tu Floristería</h2>
+
+            <div class="florist-layout">
+                <!-- Inventario de Flores Cosechadas -->
+                <div class="inventory-section">
+                    <h3>Tu Inventario</h3>
+                    <div id="flower-inventory" class="inventory-grid">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+
+                <!-- Catálogo de Recetas de Ramos -->
+                <div class="recipes-section">
+                    <h3>Armar Ramos</h3>
+                    <div id="recipes-list" class="recipes-list">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capas de Clima -->
+    <div id="weather-layer" class="weather-layer"></div>
+    <div id="night-layer" class="night-layer"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
