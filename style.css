@@ -1011,24 +1011,56 @@ body.weather-cloudy .weather-layer {
 .seed-btn .icon {
     font-size: 2.5rem;
 }
+/* Dark Theme */
+body.dark-theme {
+    background-color: #1a1a2e !important;
+    --grass-color: #1b4332;
+    --grass-dark: #081c15;
+    --dirt-dry: #4a3b2c;
+    --dirt-dry-hover: #5c4a38;
+    --dirt-wet: #2c1e16;
+    --dirt-wet-hover: #3a281d;
+    --panel-bg: rgba(30, 30, 40, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f0f0f0;
+    --accent-blue: #4ea8de;
+}
+body.dark-theme .stat-box { background: rgba(50, 50, 60, 0.9); color: #fff; }
+body.dark-theme .title-box h1 { color: #fff; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); }
+body.dark-theme h3 { color: #ccc; }
+body.dark-theme .tool-btn { background: #2a2a35; color: #ddd; }
+body.dark-theme .tool-btn.active { background: #3a3a4f; color: var(--accent-blue); border-color: var(--accent-blue); }
+body.dark-theme .modal-content { background: var(--panel-bg); color: #fff; }
+body.dark-theme .seed-btn { background: #2a2a35; color: #fff; }
+body.dark-theme .seed-btn .name { color: #fff; }
+body.dark-theme .inventory-item, body.dark-theme .recipe-card { background: #2a2a35; color: #fff; }
+body.dark-theme .recipe-title { color: #fff; }
+body.dark-theme .ingredient { background: #3a3a45; }
+body.dark-theme .icon-btn { background: #2a2a35; color: #fff; }
+body.dark-theme .environment-box { background: rgba(50, 50, 60, 0.9); color: #fff; }
+
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
         align-items: flex-start;
+        overflow: hidden; /* Evitar scroll en el body */
     }
     .app-container {
-        height: 100vh;
+        height: 100dvh; /* Usa viewport height dinámico */
         border-radius: 0;
-        overflow-y: auto;
-        padding-bottom: 10px;
+        overflow: hidden; /* Que no haya scroll en general */
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: column;
     }
     
     .top-bar {
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 5px;
         justify-content: center;
         text-align: center;
-        padding: 10px 15px;
+        padding: 5px 10px;
+        flex-shrink: 0;
     }
     
     .title-box {
@@ -1036,33 +1068,41 @@ body.weather-cloudy .weather-layer {
         order: -1;
     }
     .title-box h1 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        margin: 0;
     }
     
     .stat-box {
-        padding: 6px 12px;
-        font-size: 1rem;
+        padding: 4px 8px;
+        font-size: 0.9rem;
     }
     .stat-box .icon {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .header-actions {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        gap: 5px;
     }
     
     .garden-area {
-        padding: 10px;
+        flex: 1; /* Ocupa el espacio restante */
+        padding: 5px;
         perspective: 800px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 0; /* Para que flexbox reduzca el grid */
     }
 
     .grid {
-        grid-gap: 8px;
-        padding: 15px;
+        grid-gap: 5px;
+        padding: 10px;
         transform: rotateX(15deg);
         width: 100%;
+        max-height: 100%;
+        aspect-ratio: 1 / 1;
         max-width: 400px;
     }
     
@@ -1070,88 +1110,99 @@ body.weather-cloudy .weather-layer {
         width: 100%;
         aspect-ratio: 1 / 1;
         height: auto;
-        border-radius: 8px;
+        border-radius: 6px;
     }
     
     .plant {
-        font-size: 2.2rem;
-        bottom: 10px;
+        font-size: 2rem;
+        bottom: 5px;
     }
 
     .control-panel {
         flex-direction: column;
         align-items: stretch;
-        gap: 15px;
-        padding: 15px;
+        gap: 10px;
+        padding: 10px;
+        flex-shrink: 0; /* No encogerse */
+    }
+    
+    h3 {
+        margin-bottom: 2px;
+        font-size: 0.75rem;
     }
     
     .tools, .shop, .actions {
         width: 100%;
         align-items: center;
+        gap: 5px;
     }
     
     .tool-buttons, .shop-buttons {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 8px;
+        gap: 5px;
         width: 100%;
     }
     
     .tool-btn, .shop-btn, .action-btn {
         flex: 1 1 auto;
-        min-height: 44px; /* Touch target size */
-        padding: 8px 12px;
-        font-size: 0.95rem;
+        min-height: 38px; /* Tamaño táctil ajustado */
+        padding: 6px 10px;
+        font-size: 0.85rem;
     }
     
     .shop-btn {
         flex-direction: row;
-        gap: 8px;
+        gap: 5px;
     }
     .shop-btn .icon {
         margin-bottom: 0;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     /* Modals Responsive */
     .modal-content {
         width: 95%;
-        padding: 20px;
-        max-height: 90vh;
+        padding: 15px;
+        max-height: 85vh;
         overflow-y: auto;
     }
     
     .modal-content h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
     }
     
     .florist-layout {
         flex-direction: column;
         height: auto;
         overflow: visible;
+        gap: 10px;
     }
     
     .inventory-section, .recipes-section {
         flex: none;
         width: 100%;
-        max-height: 300px;
+        max-height: 250px;
         overflow-y: auto;
+        padding: 10px;
     }
     
     .seed-grid {
         grid-template-columns: 1fr;
+        gap: 8px;
     }
     
     .seed-btn {
         flex-direction: row;
         text-align: left;
         justify-content: flex-start;
-        padding: 10px 15px;
+        padding: 8px 12px;
     }
     
     .seed-btn .icon {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .seed-info {
@@ -1161,20 +1212,21 @@ body.weather-cloudy .weather-layer {
 
 @media (max-width: 480px) {
     .plant {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
     .grid {
-        grid-gap: 5px;
-        padding: 10px;
+        grid-gap: 3px;
+        padding: 5px;
     }
     .tool-btn {
-        font-size: 0.85rem;
-        padding: 8px;
+        font-size: 0.8rem;
+        padding: 5px;
     }
     .recipe-card {
         flex-direction: column;
         align-items: stretch;
-        gap: 15px;
+        gap: 10px;
+        padding: 10px;
     }
     .recipe-action {
         flex-direction: row;
