@@ -237,9 +237,15 @@ function updateStats() {
 
 function updateEnvironmentVisuals() {
     const season = SEASONS[gameState.seasonIndex];
+    const isDark = document.body.classList.contains('dark-theme');
+    
     document.body.className = '';
     document.body.classList.add(`season-${season}`);
     document.body.classList.add(`weather-${gameState.weather}`);
+    
+    if (isDark) {
+        document.body.classList.add('dark-theme');
+    }
 }
 
 // Catálogos
