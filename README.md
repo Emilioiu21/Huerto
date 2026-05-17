@@ -2,7 +2,7 @@
 
 Este proyecto es un juego web interactivo desarrollado con HTML, CSS y JavaScript Vanilla. El objetivo es mantener un huerto, plantar semillas, regar la tierra, recolectar flores y venderlas o armar hermosos ramos en tu propia floristería.
 
-## Historial de Modificaciones y Actualizaciones
+ Historial de Modificaciones y Actualizaciones
 
 A continuación se detalla el progreso y las características que se han ido añadiendo al proyecto desde su creación:
 
