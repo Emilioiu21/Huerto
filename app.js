@@ -128,6 +128,20 @@ const suppliesCatalogGrid = document.getElementById('supplies-catalog-grid');
 
 // Inicialización
 function initGame() {
+    // Lógica de la pantalla de carga
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        if (!sessionStorage.getItem('hasLoadedBefore')) {
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                sessionStorage.setItem('hasLoadedBefore', 'true');
+            }, 3000); // Muestra la animación por 3 segundos
+        } else {
+            loadingScreen.style.display = 'none';
+            loadingScreen.classList.add('hidden');
+        }
+    }
+
     loadState();
 
     if (gameState.plots.length !== GRID_SIZE) {
