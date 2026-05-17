@@ -873,9 +873,9 @@ body.weather-cloudy .weather-layer {
     background: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+    width: 48px;
+    height: 48px;
+    font-size: 1.6rem;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -1119,37 +1119,38 @@ body.dark-theme .environment-box { background: rgba(50, 50, 60, 0.9); color: #ff
     }
 
     .control-panel {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        padding: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
         flex-shrink: 0; /* No encogerse */
     }
     
-    h3 {
-        margin-bottom: 2px;
-        font-size: 0.75rem;
+    .control-panel h3 {
+        display: none; /* Ocultar títulos para ahorrar espacio vertical */
     }
     
     .tools, .shop, .actions {
-        width: 100%;
+        width: auto;
         align-items: center;
         gap: 5px;
     }
     
     .tool-buttons, .shop-buttons {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: center;
         gap: 5px;
-        width: 100%;
+        width: auto;
     }
     
     .tool-btn, .shop-btn, .action-btn {
-        flex: 1 1 auto;
-        min-height: 38px; /* Tamaño táctil ajustado */
-        padding: 6px 10px;
-        font-size: 0.85rem;
+        flex: 0 0 auto;
+        min-height: 40px; /* Tamaño táctil ajustado */
+        padding: 6px 12px;
+        font-size: 0.9rem;
     }
     
     .shop-btn {
@@ -1158,7 +1159,7 @@ body.dark-theme .environment-box { background: rgba(50, 50, 60, 0.9); color: #ff
     }
     .shop-btn .icon {
         margin-bottom: 0;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     /* Modals Responsive */
