@@ -104,6 +104,7 @@ const dayDisplay = document.getElementById('day-display');
 const gridElement = document.getElementById('garden-grid');
 const btnNextDay = document.getElementById('btn-next-day');
 const btnReset = document.getElementById('btn-reset');
+const btnTheme = document.getElementById('btn-theme');
 const toolButtons = document.querySelectorAll('.tool-btn');
 const btnFlorist = document.getElementById('btn-florist');
 const floristModal = document.getElementById('florist-modal');
@@ -140,6 +141,15 @@ function initGame() {
             loadingScreen.style.display = 'none';
             loadingScreen.classList.add('hidden');
         }
+    }
+
+    // Aplicar tema guardado
+    const savedTheme = localStorage.getItem('huertoTheme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (btnTheme) btnTheme.textContent = '☀️';
+    } else {
+        if (btnTheme) btnTheme.textContent = '🌙';
     }
 
     loadState();
@@ -322,6 +332,15 @@ function setupEventListeners() {
             location.reload();
         }
     });
+
+    if (btnTheme) {
+        btnTheme.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            btnTheme.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('huertoTheme', isDark ? 'dark' : 'light');
+        });
+    }
 
     btnFlorist.addEventListener('click', openFlorist);
     btnCloseFlorist.addEventListener('click', closeFlorist);
