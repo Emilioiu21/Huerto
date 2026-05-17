@@ -22,16 +22,20 @@
     <div class="app-container">
         <!-- Header con estadísticas -->
         <header class="top-bar">
-            <div class="stat-box">
-                <span class="icon">🪙</span>
-                <span id="coins-display" class="value">1000</span>
+            <div class="top-row">
+                <div class="icon-group">
+                    <button id="btn-theme" class="icon-btn" title="Cambiar Tema">🌙</button>
+                    <button id="btn-reset" class="icon-btn" title="Reiniciar Juego">⚙️</button>
+                </div>
+                <div class="title-box">
+                    <h1>Mi Huerto Virtual</h1>
+                </div>
+                <div class="stat-box coins-box">
+                    <span class="icon">🪙</span>
+                    <span id="coins-display" class="value">1000</span>
+                </div>
             </div>
-            <div class="title-box">
-                <h1>Mi Huerto Virtual</h1>
-            </div>
-            <div class="header-actions">
-                <button id="btn-theme" class="icon-btn" title="Cambiar Tema">🌙</button>
-                <button id="btn-reset" class="icon-btn" title="Reiniciar Juego">⚙️</button>
+            <div class="bottom-row">
                 <button id="btn-florist" class="florist-btn">
                     💐 Floristería
                 </button>
@@ -39,7 +43,7 @@
                     <span id="season-icon" class="icon">🌸</span>
                     <span class="value" id="weather-text">Soleado</span>
                 </div>
-                <div class="stat-box">
+                <div class="stat-box day-box">
                     <span class="icon">☀️</span>
                     <span class="value">Día <span id="day-display">1</span></span>
                 </div>
